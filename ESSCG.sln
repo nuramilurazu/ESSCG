@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ESSCG", "ESSCG\ESSCG.vbproj", "{848784F1-E433-4B20-A000-549E6D1593DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{848784F1-E433-4B20-A000-549E6D1593DC}.Debug|x86.ActiveCfg = Debug|x86
+		{848784F1-E433-4B20-A000-549E6D1593DC}.Debug|x86.Build.0 = Debug|x86
+		{848784F1-E433-4B20-A000-549E6D1593DC}.Release|x86.ActiveCfg = Release|x86
+		{848784F1-E433-4B20-A000-549E6D1593DC}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,55 @@
+.iso .cue
+.adf
+.dsk .cpc
+.dsk
+.zip .iso
+.bas .bin .xex .atr .xfd .dcm .atr.gz .xfd.gz
+.a26 .bin .rom
+.a52 .bas .bin .xex .atr .xfd .dcm .atr.gz .xfd.gz
+.a78 .bin
+.lnx
+.st .stx .img .rom .raw .ipf .ctr .msa
+.j64 .jag
+.bin
+.xex
+.crt .d64 .g64 .t64 .tap .x64
+.c64 .x64 .t64
+.int .bin
+.img .rom
+.iso .bin
+.iso .bin
+.rom .ri .mx1 .mx2 .col .sg .sc
+.zip
+.ngp
+.ngc
+.3ds .3dsx .elf .axf .cci .cxi
+.n64 .v64 .z64 .zip .7z .rar .gz
+.nds .ds.gba .zip .7z .rar .gz .srl
+.nes .fds .unif
+.vb .vboy .bin
+.gb .dmg .sgb
+.gba .bin .agb .gbz
+.gbc .dmg .sgb
+.elf .iso .gcm .dol .ciso .wad .gcz
+.wbfs .iso .dol .wad .elf
+.wud .rpx .rpl
+.cue .ccd .toc .exe .com .bat .conf
+32x .smd .bin .md
+.smd .bin .md .iso
+.chd .cdi .iso .elf .bin .cue .gdi
+.gg
+.sg .zip
+.sms
+.smd .bin .md .iso
+.bin .iso .mdf
+.bin .iso .img .cue .ccd .mds .pbp .ecm .toc .m3u .exe
+.iso .nrg .elf .bin .dump .mdf .img .gz
+.iso .bin .elf .self
+.iso .bin
+.iso
+.iso .cso .zip .pbp .elf .prx
+.sfc .smc .bml .fig .gd3 .gd7 .dx2 .bsx .swc
+.pce .cue .ccd .sgx
+.ws
+.wsc
+sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk
