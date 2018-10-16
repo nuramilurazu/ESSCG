@@ -57,8 +57,6 @@ Public Class ConfigGenerator
             Case "config"
                 text_stream = executing_assembly.GetManifestResourceStream(my_namespace + ".defualtESConfig.txt")
 
-                'Dim stream_reader As New StreamReader(text_stream)
-
                 stream_reader = New StreamReader(text_stream)
 
                 CFGWriter = File.CreateText(esSystemCFG)
