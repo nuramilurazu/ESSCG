@@ -16,8 +16,6 @@ Public Class ConfigGenerator
 
     Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
-        
-
         Me.Size = New Size(698, 390)
 
         If File.Exists(esSystemCFG) Then
@@ -25,111 +23,113 @@ Public Class ConfigGenerator
             currentESSC = CFGReader.ReadToEnd()
             CFGReader.Dispose()
         Else
-            MessageBox.Show("Unable to Locate es_systems.cfg. Make sure you have installed Emulation Station first before using this app.", "Error")
-            Me.Close()
+            MessageBox.Show("Unable to Locate es_systems.cfg. Creating New Config file, And Restarting Application.", "Alert")
+            
+            build("config")
+
+            Application.Restart()
+            Exit Sub
         End If
 
         ReDim Platforms(54)
 
         intalizeControls()
         readSystemCFG()
-        buildDDLFullNames()
-        buildDDLSysNames()
-        buildExtenionsList()
+        build("prep")
 
     End Sub
 
-    Private Sub buildDDLFullNames()
-        Dim temp As String
+    Private Sub build(ByVal cmd As String)
 
-        Dim executing_assembly As System.Reflection.Assembly = _
-    Reflection.Assembly.GetEntryAssembly()
+        Dim temp As String
+        Dim i As Integer
+        Dim stream_reader As StreamReader
+
+
+        Dim executing_assembly As System.Reflection.Assembly = Reflection.Assembly.GetEntryAssembly()
 
         ' Get our namespace.
-        Dim my_namespace As String = _
-            executing_assembly.GetName().Name.ToString()
+        Dim my_namespace As String = executing_assembly.GetName().Name.ToString()
 
-        'build fullnames ddl
-        Dim text_stream As Stream = _
-            executing_assembly.GetManifestResourceStream(my_namespace _
-            + ".fullnames.txt")
-        If Not (text_stream Is Nothing) Then
-            Dim stream_reader As New StreamReader(text_stream)
+        Dim text_stream As Stream
 
-            Dim i As Integer = 0
+        Select Case cmd
+            Case "config"
+                text_stream = executing_assembly.GetManifestResourceStream(my_namespace + ".defualtESConfig.txt")
 
-            Do
-                Try
-                    temp = stream_reader.ReadLine
-                    ddlFullNames.Items.Add(temp)
-                    Platforms(i) = New pArray With {.fullname = temp}
-                Catch ex As Exception
-                    Exit Do
-                End Try
-                i += 1
-            Loop
-            stream_reader.Close()
-        End If
-    End Sub
+                'Dim stream_reader As New StreamReader(text_stream)
 
-    Private Sub buildDDLSysNames()
-        Dim temp As String
+                stream_reader = New StreamReader(text_stream)
 
-        Dim executing_assembly As System.Reflection.Assembly = _
-    Reflection.Assembly.GetEntryAssembly()
+                CFGWriter = File.CreateText(esSystemCFG)
+                CFGWriter.Write(stream_reader.ReadToEnd)
+                CFGWriter.Dispose()
 
-        ' Get our namespace.
-        Dim my_namespace As String = _
-            executing_assembly.GetName().Name.ToString()
+                stream_reader.Dispose()
 
-        'build fullnames ddl
-        Dim text_stream As Stream = _
-            executing_assembly.GetManifestResourceStream(my_namespace _
-            + ".platforms.txt")
-        If Not (text_stream Is Nothing) Then
-            Dim stream_reader As New StreamReader(text_stream)
-            Dim i As Integer = 0
-            Do
-                Try
-                    temp = stream_reader.ReadLine
-                    Platforms(i).name = temp
-                Catch ex As Exception
-                    Exit Do
-                End Try
-                i += 1
-            Loop
-            stream_reader.Close()
-        End If
-    End Sub
+                Exit Select
+            Case "prep"
+                text_stream = executing_assembly.GetManifestResourceStream(my_namespace + ".fullnames.txt")
 
-    Private Sub buildExtenionsList()
-        Dim temp As String
+                If Not (text_stream Is Nothing) Then
 
-        Dim executing_assembly As System.Reflection.Assembly = _
-    Reflection.Assembly.GetEntryAssembly()
+                    stream_reader = New StreamReader(text_stream)
+                    i = 0
 
-        ' Get our namespace.
-        Dim my_namespace As String = _
-            executing_assembly.GetName().Name.ToString()
+                    Do
+                        Try
+                            temp = stream_reader.ReadLine
+                            ddlFullNames.Items.Add(temp)
+                            Platforms(i) = New pArray With {.fullname = temp}
+                        Catch ex As Exception
+                            Exit Do
+                        End Try
+                        i += 1
+                    Loop
+                    stream_reader.Close()
+                End If
 
-        'build fullnames ddl
-        Dim text_stream As Stream = _
-            executing_assembly.GetManifestResourceStream(my_namespace _
-            + ".extensions.txt")
-        If Not (text_stream Is Nothing) Then
-            Dim stream_reader As New StreamReader(text_stream)
-            Dim i As Integer = 0
-            Do
-                Try
-                    temp = stream_reader.ReadLine
-                    Platforms(i).extensions = temp
-                Catch ex As Exception
-                    Exit Do
-                End Try
-                i += 1
-            Loop
-            stream_reader.Close()
-        End If
+                text_stream = executing_assembly.GetManifestResourceStream(my_namespace + ".platforms.txt")
+
+                If Not (text_stream Is Nothing) Then
+
+                    stream_reader = New StreamReader(text_stream)
+                    i = 0
+
+                    Do
+                        Try
+                            temp = stream_reader.ReadLine
+                            Platforms(i).name = temp
+                        Catch ex As Exception
+                            Exit Do
+                        End Try
+                        i += 1
+                    Loop
+                    stream_reader.Close()
+                End If
+
+                text_stream = executing_assembly.GetManifestResourceStream(my_namespace + ".extensions.txt")
+
+                If Not (text_stream Is Nothing) Then
+
+                    stream_reader = New StreamReader(text_stream)
+                    i = 0
+
+                    Do
+                        Try
+                            temp = stream_reader.ReadLine
+                            Platforms(i).extensions = temp
+                        Catch ex As Exception
+                            Exit Do
+                        End Try
+                        i += 1
+                    Loop
+                    stream_reader.Close()
+                End If
+
+                Exit Select
+        End Select
+
     End Sub
 
     Private Sub ePSXeBiosOption() 'ePSXe controls
@@ -394,6 +394,9 @@ Public Class ConfigGenerator
             lBSystemList.Items.RemoveAt(tempint)
             lBSystemList.Items.Insert(tempint, sysArray(tNum).fullname)
         End If
+
+        disableControls()
+
     End Sub
 
     Private Sub cmdRemove_Click(sender As System.Object, e As System.EventArgs) Handles cmdRemove.Click
@@ -415,6 +418,7 @@ Public Class ConfigGenerator
         txtemulator.Clear()
         extraControlsHider()
         cmdSet.Tag = "new"
+        enableControls()
     End Sub
 
     Private Sub lBSystemList_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles lBSystemList.SelectedIndexChanged
@@ -445,6 +449,7 @@ Public Class ConfigGenerator
 
         txtRoms.Text = RomDirectory.ToString
         txtemulator.Text = EmuDirectory.ToString
+        enableControls()
 
     End Sub
 
@@ -479,7 +484,7 @@ Public Class ConfigGenerator
         CFGWriter.WriteLine(vbTab & vbTab & "<extension>" & sysArray(i).extensions & "</extension>")
 
         If sysArray(i).emuPath.ToLower.Contains("dolphin.exe") Then
-            command = sysArray(i).emuPath & " ""/e"" ""%ROM_RAW%"" ""/b"""
+            command = sysArray(i).emuPath & " ""%ROM_RAW%"" ""/b"""
         ElseIf sysArray(i).emuPath.ToLower.Contains("epsxe.exe") Then
             command = sysArray(i).emuPath & " -nogui -bios """ & sysArray(i).bios & """ -loadbin ""%ROM_RAW%"""
         ElseIf sysArray(i).emuPath.ToLower.Contains("retroarch.exe") Then
@@ -507,6 +512,9 @@ Public Class ConfigGenerator
             sysArray.RemoveAt(i)
             sysArrayInsert(insertPoint)
         End If
+
+        lBSystemList.SelectedIndex = insertPoint
+
     End Sub
 
     Private Sub cmdMoveDown_Click(sender As System.Object, e As System.EventArgs) Handles cmdMoveDown.Click
@@ -522,6 +530,8 @@ Public Class ConfigGenerator
             sysArrayInsert(insertPoint)
             sysArray.RemoveAt(i)
         End If
+
+        lBSystemList.SelectedIndex = insertPoint - 1
     End Sub
 
     Private Sub tempIArray(ByVal index As Integer)
@@ -533,6 +543,24 @@ Public Class ConfigGenerator
 
     Private Sub sysArrayInsert(ByVal index As Integer)
         sysArray.Insert(index, New iArray With {.name = holder(0).name, .fullname = holder(0).fullname, .bios = holder(0).bios, .core = holder(0).core, .emuPath = holder(0).emuPath, .romPath = holder(0).romPath, .extensions = holder(0).extensions, .theme = holder(0).theme, .platform = holder(0).platform})
+    End Sub
+
+    Private Sub enableControls()
+        cmdEmulationBrowser.Enabled = True
+        cmdRomBrowse.Enabled = True
+        cmdSet.Enabled = True
+        ddlFullNames.Enabled = True
+        ddlCores.Enabled = True
+        cmdBiosBrowser.Enabled = True
+    End Sub
+
+    Private Sub disableControls()
+        cmdEmulationBrowser.Enabled = False
+        cmdRomBrowse.Enabled = False
+        cmdSet.Enabled = False
+        ddlFullNames.Enabled = False
+        ddlCores.Enabled = False
+        cmdBiosBrowser.Enabled = False
     End Sub
 
 End Class

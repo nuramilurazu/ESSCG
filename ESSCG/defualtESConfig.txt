@@ -1,0 +1,30 @@
+﻿<!-- This is the EmulationStation Systems configuration file. All systems must be contained within the <systemList> tag.-->
+<systemList>
+
+<!-- Here's an example system to get you started. -->
+<system>
+
+<!-- A short identifier for the system. Used in some folder structures and error messages. -->
+<name>snes</name>
+
+<!-- A "pretty" name, displayed in the menus and such. This tag is optional. -->
+<fullname>Super Nintendo Entertainment System</fullname>
+
+<!-- The path to the top-most folder to start searching for games in. If the first character is '~', it will be expanded to the home folder. All subdirectories will be included. You can use forward slashes for any platform and backslashes on Windows. -->
+<path>~/roms/snes</path>
+
+<!-- A list of extensions to search for, delimited by commas or spaces. You MUST include the period at the start of the extension! It's also case sensitive. -->
+<extension>.smc .sfc .SMC .SFC</extension>
+
+<!-- This is the shell command that is executed to run a game. A few special tags are replaced if found in a command, like %ROM%. This example would run the shell command "snesemulator /home/user/roms/snes/Super\ Mario\ World.sfc".
+<command>snesemulator %ROM%</command>
+
+<!-- The platform(s) to use when scraping (download box art and such). You can see the full list of accepted platforms below. Everything should be lowercase. This is only *only* used to give more accurate search results, so this tag is optional. You can use multiple platforms, delimited by commas or spaces.  For example: "genesis, megadrive". -->
+<platform>snes</platform>
+
+<!-- This is the theme to load from the current theme set. This tag is also optional; if not set, it will default to the value of <name>. It is recommended that you use a name from the "Recommended Theme Names" list below to make installing themes as painless as possible.-->
+<theme>snes</theme>
+
+</system>
+
+</systemList>

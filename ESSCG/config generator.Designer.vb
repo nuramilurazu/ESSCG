@@ -43,6 +43,7 @@ Partial Class ConfigGenerator
         '
         'ddlFullNames
         '
+        Me.ddlFullNames.Enabled = False
         Me.ddlFullNames.FormattingEnabled = True
         Me.ddlFullNames.Location = New System.Drawing.Point(6, 47)
         Me.ddlFullNames.Name = "ddlFullNames"
@@ -102,6 +103,7 @@ Partial Class ConfigGenerator
         '
         'cmdEmulationBrowser
         '
+        Me.cmdEmulationBrowser.Enabled = False
         Me.cmdEmulationBrowser.Location = New System.Drawing.Point(151, 152)
         Me.cmdEmulationBrowser.Name = "cmdEmulationBrowser"
         Me.cmdEmulationBrowser.Size = New System.Drawing.Size(75, 23)
@@ -128,6 +130,7 @@ Partial Class ConfigGenerator
         '
         'cmdRomBrowse
         '
+        Me.cmdRomBrowse.Enabled = False
         Me.cmdRomBrowse.Location = New System.Drawing.Point(151, 95)
         Me.cmdRomBrowse.Name = "cmdRomBrowse"
         Me.cmdRomBrowse.Size = New System.Drawing.Size(75, 23)
@@ -146,6 +149,7 @@ Partial Class ConfigGenerator
         '
         'cmdSet
         '
+        Me.cmdSet.Enabled = False
         Me.cmdSet.Location = New System.Drawing.Point(220, 262)
         Me.cmdSet.Name = "cmdSet"
         Me.cmdSet.Size = New System.Drawing.Size(75, 23)
